@@ -1,5 +1,6 @@
 #version 150 compatibility
 
+
 in vertexData
 {
 	vec3 vpos;
