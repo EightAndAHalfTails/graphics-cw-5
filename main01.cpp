@@ -335,7 +335,7 @@ int main(int argc, char **argv) {
 	if (glewIsSupported("GL_VERSION_3_1"))
 		printf("Ready for OpenGL 3.1\n");
 	else {
-		printf("OpenGL 2.1 not supported\n");
+		printf("OpenGL 3.1 not supported\n");
 		exit(1);
 	}
 	if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader && GL_EXT_geometry_shader4)
