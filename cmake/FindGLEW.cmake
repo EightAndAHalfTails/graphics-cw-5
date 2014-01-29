@@ -4,11 +4,11 @@
 #  GLEW_FOUND - system has GLEW
 #  GLEW_INCLUDE_DIR - the GLEW include directory
 #  GLEW_LIBRARIES - The libraries needed to use GLEW
-
+ 
 if(GLEW_INCLUDE_DIR AND GLEW_LIBRARIES)
    set(GLEW_FOUND TRUE)
 else(GLEW_INCLUDE_DIR AND GLEW_LIBRARIES)
-
+ 
 FIND_PATH(GLEW_INCLUDE_DIR GL/glew.h
    /usr/include
    /usr/local/include
@@ -18,7 +18,7 @@ FIND_PATH(GLEW_INCLUDE_DIR GL/glew.h
    $ENV{GLEW_DIR}/inc
    [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC]/PlatformSDK/Include
 )
-
+ 
 FIND_LIBRARY(GLEW_LIBRARIES NAMES glew64 GLEW glew glew32
    PATHS
    /usr/lib
@@ -31,12 +31,12 @@ FIND_LIBRARY(GLEW_LIBRARIES NAMES glew64 GLEW glew glew32
    [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC]/PlatformSDK/Lib
    DOC "glew library name"
 )
-
+ 
 if(GLEW_INCLUDE_DIR AND GLEW_LIBRARIES)
    set(GLEW_FOUND TRUE)
 endif(GLEW_INCLUDE_DIR AND GLEW_LIBRARIES)
-
-
+ 
+ 
 if(GLEW_FOUND)
    if(NOT GLEW_FIND_QUIETLY)
       message(STATUS "Found GLEW: ${GLEW_LIBRARIES}")
@@ -46,7 +46,7 @@ else(GLEW_FOUND)
       message(FATAL_ERROR "could NOT find glew")
    endif(GLEW_FIND_REQUIRED)
 endif(GLEW_FOUND)
-
+ 
 MARK_AS_ADVANCED(GLEW_INCLUDE_DIR GLEW_LIBRARIES)
-
+ 
 endif(GLEW_INCLUDE_DIR AND GLEW_LIBRARIES)
