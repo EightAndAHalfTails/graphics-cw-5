@@ -19,7 +19,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef _WIN32
+#ifdef WIN32
 #include "GL/glut.h"
 #endif
 
@@ -31,7 +31,7 @@ void CheckOpenGLError(const char* stmt, const char* fname, int line)
 	if (err != GL_NO_ERROR)
 	{
 		printf("OpenGL error %08x, at %s:%i - for %s\n", err, fname, line, stmt);
-		//abort();
+		abort();
 	}
 }
 
@@ -97,18 +97,19 @@ int textFileWrite(char *fn, char *s)
 		}
 	}
 	return(status);
-}
+}   
 
 ///////////////////////////////////////////////////////////////////////
-//shaders and light pos variables
+//shader and light variables
 GLuint v,f,p,g;
 float lpos[4] = {15.0, 0.5, 15.0, 0.0};
+int shader = 0;
 int subdivLevel;
 GLuint tex;
 
 // mouse controls
 /////////////////////////////////////////////////
-//scene interaction variables
+//scene interaction variables 
 int mouse_old_x, mouse_old_y;
 int mouse_buttons = 0;
 float rotate_x = 0.0, rotate_y = 0.0;
@@ -139,11 +140,9 @@ void changeSize(int w, int h)
 	// Set the correct perspective.
 	gluPerspective(45, ratio, 0.1, 1000);
 	glMatrixMode(GL_MODELVIEW);
-	/////////////////////////////////////////////////
-	//TODO add scene interaction code here
+
 	win_width = w;
 	win_height = h;
-	/////////////////////////////////////////////////
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -156,18 +155,13 @@ void renderScene(void)
 	gluLookAt(0.0,0.0,1.0,0.0,0.0,-1.0,0.0f,1.0f,0.0f);
 	glLightfv(GL_LIGHT0, GL_POSITION, lpos);
 	glPushMatrix();
-	/////////////////////////////////////////////////
-	//TODO add scene interaction code here
 	glTranslatef(move_x, move_y, 0.0);
 	glTranslatef(0.0, 0.0, translate_z);
 	glRotatef(rotate_x, 1.0, 0.0, 0.0);
 	glRotatef(rotate_y, 0.0, 1.0, 0.0);
-	/////////////////////////////////////////////////
-	GL_CHECK(glUseProgram(p));
 	glutSolidTeapot(0.5);
 
 	glPopMatrix();
-
 	GL_CHECK(glutSwapBuffers());
 }
 
@@ -175,7 +169,7 @@ void renderScene(void)
 //keyboard functions
 void processNormalKeys(unsigned char key, int x, int y) {
 
-	if (key == 27)
+	if (key == 27) 
 		exit(0);
 }
 
@@ -183,11 +177,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
 // mouse interaction functions
 void mouseClick(int button, int state, int x, int y)
 {
-	/////////////////////////////////////////////////
-	// TODO add code to handle mouse click events
-	// use GLUT_UP and GLUT_DOWN to evaluate the current
-	// "state" of the mouse.
-
 	if (state == GLUT_DOWN)
 	{
 		mouse_buttons |= 1<<button;
@@ -199,41 +188,31 @@ void mouseClick(int button, int state, int x, int y)
 
 	mouse_old_x = x;
 	mouse_old_y = y;
-	/////////////////////////////////////////////////
 }
 
 void mouseMotion(int x, int y)
 {
-	/////////////////////////////////////////////////
-	// TODO add code to handle mouse move events
-	// and calculate reasonable values for object
-	// rotations
-
 	float dx, dy;
 	dx = (float)(x - mouse_old_x);
 	dy = (float)(y - mouse_old_y);
 
 	if (mouse_buttons & 1)
 	{
-		//rotation
 		rotate_x += dy * 0.2f;
 		rotate_y += dx * 0.2f;
 	}
 	else if (mouse_buttons & 2)
 	{
-		//very simple correction for different window size
 		move_x += dx * 1.0f/win_width;
 		move_y -= dy * 1.0f/win_height;
 	}
 	else if (mouse_buttons & 4)
 	{
-		//translate along z == kind of zoom
 		translate_z += dy * 0.01f;
 	}
 
 	mouse_old_x = x;
 	mouse_old_y = y;
-	/////////////////////////////////////////////////
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -246,28 +225,28 @@ void setShaders()
 	f = glCreateShader(GL_FRAGMENT_SHADER);
 	g = glCreateShader(GL_GEOMETRY_SHADER);
 
-	vs = textFileRead("./shader01.vert");
-	fs = textFileRead("./shader01.frag");
-	gs = textFileRead("./shader01.geom");
+	vs = textFileRead("./shader02.vert");
+	fs = textFileRead("./shader02.frag");
+	gs = textFileRead("./shader02.geom");
 
 	const char * ff = fs;
 	const char * vv = vs;
 	const char * gg = gs;
 
-	GL_CHECK(glShaderSource(v, 1, &vv,NULL));
-	GL_CHECK(glShaderSource(f, 1, &ff,NULL));
-	GL_CHECK(glShaderSource(g, 1, &gg,NULL));
+	glShaderSource(v, 1, &vv,NULL);
+	glShaderSource(f, 1, &ff,NULL);
+	glShaderSource(g, 1, &gg,NULL);
 
 	free(vs);free(fs);free(gs);
 
-	GL_CHECK(glCompileShader(v));
-	GL_CHECK(glCompileShader(f));
-	GL_CHECK(glCompileShader(g));
+	glCompileShader(v);
+	glCompileShader(f);
+	glCompileShader(g);
 
-	GLint blen = 0;
+	GLint blen = 0; 
 	GLsizei slen = 0;
 
-	glGetShaderiv(v, GL_INFO_LOG_LENGTH , &blen);
+	glGetShaderiv(v, GL_INFO_LOG_LENGTH , &blen);       
 	if (blen > 1)
 	{
 		GLchar* compiler_log = (GLchar*)malloc(blen);
@@ -275,9 +254,9 @@ void setShaders()
 		std::cout << "compiler_log vertex shader:\n" << compiler_log << std::endl;
 		free (compiler_log);
 	}
-	blen = 0;
+	blen = 0; 
 	slen = 0;
-	glGetShaderiv(f, GL_INFO_LOG_LENGTH , &blen);
+	glGetShaderiv(f, GL_INFO_LOG_LENGTH , &blen);       
 	if (blen > 1)
 	{
 		GLchar* compiler_log = (GLchar*)malloc(blen);
@@ -285,9 +264,9 @@ void setShaders()
 		std::cout << "compiler_log fragment shader:\n" << compiler_log << std::endl;
 		free (compiler_log);
 	}
-	blen = 0;
+	blen = 0; 
 	slen = 0;
-	glGetShaderiv(g, GL_INFO_LOG_LENGTH , &blen);
+	glGetShaderiv(g, GL_INFO_LOG_LENGTH , &blen);       
 	if (blen > 1)
 	{
 		GLchar* compiler_log = (GLchar*)malloc(blen);
@@ -298,18 +277,51 @@ void setShaders()
 
 	p = glCreateProgram();
 
-	GL_CHECK(glAttachShader(p,f));
-	GL_CHECK(glAttachShader(p,v));
-	GL_CHECK(glAttachShader(p,g));
+	glAttachShader(p,f);
+	glAttachShader(p,v);
+	glAttachShader(p,g);
 
-	GL_CHECK(glLinkProgram(p));
-	//comment out this line to not use the shader
-	GL_CHECK(glUseProgram(p));
+	glLinkProgram(p);
+	// comment out this line to not use the shader
+
+	glUseProgram(p);
+
+	GLint loc = glGetUniformLocation(p, "ambientColor");
+	if (loc != -1)
+	{
+		printf("setting");
+		GL_CHECK(glUniform4f(loc, 1.0,0.0,0.0,1.0));
+	}
+
+	loc = glGetUniformLocation(p, "diffuseColor");
+	if (loc != -1)
+	{
+		GL_CHECK(glUniform4f(loc, 1.0,1.0,1.0,1.0));
+	}
+
+	loc = glGetUniformLocation(p, "specularColor");
+	if (loc != -1)
+	{
+		GL_CHECK(glUniform4f(loc, 1.0,1.0,1.0,1.0));
+	}
+
+	loc = glGetUniformLocation(p, "specularExponent");
+	if (loc != -1)
+	{
+		GL_CHECK(glUniform1f(loc, 25.0));
+	}
+
+	loc = glGetUniformLocation(p, "shader");
+	if (loc != -1)
+	{
+		GL_CHECK(glUniform1i(loc, shader));
+	}
+
 }
 
 
 
-void initialize ()
+void initialize () 
 {
 	glMatrixMode(GL_PROJECTION);
 	glViewport(0, 0, 320, 320);
@@ -338,12 +350,26 @@ void initialize ()
 	glDepthFunc( GL_LEQUAL );
 	glEnable( GL_DEPTH_TEST );
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT0); 
 }
 
 ///////////////////////////////////////////////////////////////////////
 //main, setup and execution of environment
 int main(int argc, char **argv) {
+
+    printf("calling putenv with: LIBGL_ALWAYS_SOFTWARE=1 \n");
+    if(putenv("LIBGL_ALWAYS_SOFTWARE=1")!=0)
+    {
+      fprintf(stderr,"putenv failed\n");
+    }
+
+	if(argc < 2)
+	{
+		printf("please select illumination model 1 2 or 3\n");
+		printf("usage: cgExercise02 <model number>\n");
+		return EXIT_FAILURE;
+	}
+	shader = atoi(argv[1]);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
