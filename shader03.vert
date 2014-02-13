@@ -1,12 +1,9 @@
 #version 150 compatibility
 
-////////////////
-//exercise 2
 uniform vec4 ambientColor;
 uniform vec4 diffuseColor;
 uniform vec4 specularColor;
 uniform float specularExponent;
-uniform int shader;
 
 out vertexData
 {
@@ -15,21 +12,18 @@ out vertexData
 	vec4 color;
 }vertex;
 
-/////////////
-
 void main()
 {
-        vertex.pos = vec3(gl_ModelViewMatrix * gl_Vertex);
-        vertex.normal = normalize(gl_NormalMatrix * gl_Normal);
-        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-        vertex.color = vec4(1.0,0.0,0.0,1.0);
-	
-        if(shader == 1)
-        {
-		//////////////////////////////
-		//exercise 2.1 Gouraud shading
-		//TODO enter your code here
-                vec3 v = vertex.pos;
+	vertex.pos = vec3(gl_ModelViewMatrix * gl_Vertex);
+	vertex.normal = normalize(gl_NormalMatrix * gl_Normal);
+	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;  
+	vertex.color = vec4(1.0,0.0,0.0,1.0);
+
+	//exercise 2.1 Gouraud shading
+	//not required here but implemented for illustration reasons
+	if(false)
+	{
+		vec3 v = vertex.pos;
 		vec3 N = vertex.normal;
 		vec3 L = normalize(gl_LightSource[0].position.xyz - v);
 		vec3 E = normalize(-v);
@@ -43,10 +37,7 @@ void main()
 		vec4  diffuse = attenuation * clamp( diffuseColor * max(dot(N,L), 0.0)  , 0.0, 1.0 ) ;
 		vec4  spec = attenuation * clamp ( specularColor * pow(max(dot(R,E),0.0),0.3*specularExponent) , 0.0, 1.0 );
 
-                vertex.color = ambient + diffuse + spec;
-		//////////////////////////////
-        }
-
-
+		vertex.color = ambient + diffuse + spec;
+	}
 
 }
