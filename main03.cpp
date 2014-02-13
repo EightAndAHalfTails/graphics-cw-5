@@ -145,7 +145,6 @@ void changeSize(int w, int h)
 	gluPerspective(45, ratio, 0.1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	/////////////////////////////////////////////////
-	//TODO add scene interaction code here
 	win_width = w;
 	win_height = h;
 	/////////////////////////////////////////////////
@@ -201,10 +200,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
 // mouse interaction functions
 void mouseClick(int button, int state, int x, int y)
 {
-	/////////////////////////////////////////////////
-	// TODO add code to handle mouse click events
-	// use GLUT_UP and GLUT_DOWN to evaluate the current 
-	// "state" of the mouse.
 
 	if (state == GLUT_DOWN)
 	{
@@ -222,10 +217,7 @@ void mouseClick(int button, int state, int x, int y)
 
 void mouseMotion(int x, int y)
 {
-	/////////////////////////////////////////////////
-	// TODO add code to handle mouse move events
-	// and calculate reasonable values for object 
-	// rotations
+
 
 	float dx, dy;
 	dx = (float)(x - mouse_old_x);
