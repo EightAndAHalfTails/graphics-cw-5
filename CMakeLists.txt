@@ -25,17 +25,17 @@ add_executable(cgExercise03 main03.cpp shader03.frag shader03.vert shader03.geom
 target_link_libraries(cgExercise03 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
 endif()
 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main04.cpp)
-add_executable(cgExercise04 main04.cpp shader04.frag shader04.vert shader04.geom)
-target_link_libraries(cgExercise04 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main04a.cpp)
+add_executable(cgExercise04a main04a.cpp shader04a.frag shader04a.vert shader04a.geom)
+target_link_libraries(cgExercise04a ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
+endif()
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main04b.cpp)
+add_executable(cgExercise04b main04b.cpp shader04b.frag shader04b.vert)
+target_link_libraries(cgExercise04b ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
 endif()
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main05.cpp)
 add_executable(cgExercise05 main05.cpp shader05.frag shader05.vert)
 target_link_libraries(cgExercise05 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
-endif()
-
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main06.cpp)
-add_executable(cgExercise06 main06.cpp shader06.frag shader06.vert)
-target_link_libraries(cgExercise06 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
 endif()
