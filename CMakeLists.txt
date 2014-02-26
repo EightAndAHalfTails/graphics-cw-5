@@ -21,7 +21,7 @@ target_link_libraries(cgExercise02 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${
 endif()
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main03.cpp)
-add_executable(cgExercise03 main03.cpp shader03.frag shader03.vert shader03.geom)
+add_executable(cgExercise03 main03.cpp shader03.frag shader03.vert shader03.geom shader03_Allford_Rory.geom)
 target_link_libraries(cgExercise03 ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES} ${GLUT_glut_LIBRARY})
 endif()
 

@@ -255,7 +255,8 @@ void setShaders()
 
 	vs = textFileRead("./shader03.vert");
 	fs = textFileRead("./shader03.frag");
-	gs = textFileRead("./shader03.geom");
+	//gs = textFileRead("./shader03.geom");
+	gs = textFileRead("./shader03_Allford_Rory.geom");
 
 	const char * ff = fs;
 	const char * vv = vs;
