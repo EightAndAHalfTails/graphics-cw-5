@@ -264,6 +264,23 @@ void renderScene(void)
 	glRotatef(rotate_y, 0.0, 1.0, 0.0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelViewMatrix); 
 	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrix); 
+	
+	printf("\nModel--View Matrix:\n");
+	for(int i=0; i<4; i++)
+	  {
+	    for(int j=0; j<4; j++)
+		printf("%.2f\t", modelViewMatrix[4*i+j]);
+	    printf("\n");
+	  }
+	       
+	printf("\nProjection Matrix:\n");
+	for(int i=0; i<4; i++)
+	  {
+	    for(int j=0; j<4; j++)
+		printf("%.2f\t", projectionMatrix[4*i+j]);
+	    printf("\n");
+	  }
+	
 	/////////////////////////////////////////////////
 
 	glPopMatrix();

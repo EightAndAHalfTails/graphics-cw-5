@@ -10,9 +10,9 @@ out vec3 origin, dir, point;
 
 void  main () 
 { 
-	//nothing to be done here
-    gl_Position  = vec4(vertexPosInmodelspace,1) ; 
-    origin =  vec3 ( 0, 0, 0 ); 
-    dir = normalize ( vec3 ( vertexPosInmodelspace.x * 1.6,  vertexPosInmodelspace.y , -1.0 )); 
-	point = vertexPosInmodelspace;
+  //nothing to be done here
+  gl_Position  = vec4(vertexPosInmodelspace,1) ; 
+  origin =  vec3 ( 0, 0, 0 ); 
+  dir = normalize ( vec3 ( vertexPosInmodelspace.x * 1.6,  vertexPosInmodelspace.y , -1.0 )); 
+  point = vertexPosInmodelspace;
 }
